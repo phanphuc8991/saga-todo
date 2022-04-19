@@ -1,0 +1,14 @@
+.sidebar {
+  .logo {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin: 5px;
+    padding-bottom: 15px;
+  }
+
+  .logout {
+    color: #2d80fb;
+  }
+}
