@@ -12,14 +12,14 @@ import Todo from "../Todo";
 // ant component
 import { Row, Col } from "antd";
 const todos = [
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
-  { text: "run", image: "images" },
+  { id: 1, text: "run", image: "images" },
+  { id: 2, text: "run", image: "images" },
+  { id: 3, text: "run", image: "images" },
+  { id: 4, text: "run", image: "images" },
+  { id: 5, text: "run", image: "images" },
+  { id: 6, text: "run", image: "images" },
+  { id: 7, text: "run", image: "images" },
+  { id: 8, text: "run", image: "images" },
 ];
 function Todos() {
   // STATE
@@ -32,7 +32,12 @@ function Todos() {
     <div className={styles.todos}>
       <Row>
         {todos.map((todo) => (
-          <Col span={6} style={{ marginBottom: "20px" }}>
+          <Col
+            key={todo.id}
+            className="gutter-row"
+            span={6}
+            style={{ marginBottom: "20px" }}
+          >
             <Todo />
           </Col>
         ))}

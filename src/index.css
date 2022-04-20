@@ -171,3 +171,6 @@ input,
 select {
   vertical-align: middle;
 }
+html {
+  font-family: "Urbanist", sans-serif;
+}

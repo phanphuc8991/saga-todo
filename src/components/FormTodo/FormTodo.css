@@ -1,0 +1,9 @@
+.ant-upload.ant-upload-select {
+  display: block !important;
+}
+/* .ant-btn-default {
+  width: 100%;
+} */
+.ant-col-16 {
+  max-width: 100% !important;
+}

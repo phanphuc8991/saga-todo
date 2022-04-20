@@ -1,19 +1,20 @@
+// router dom
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+// style
 import "./App.css";
-import { Row, Col } from "antd";
-import Sidebar from "./components/Sidebar";
-import Main from "./components/Main";
+// component
+import Home from "./Pages/Home";
+import Login from "./Pages/Login";
 
 function App() {
   return (
     <div className="App">
-      <Row>
-        <Col span={5}>
-          <Sidebar />
-        </Col>
-        <Col span={19}>
-          <Main />
-        </Col>
-      </Row>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" to="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

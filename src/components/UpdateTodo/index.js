@@ -2,23 +2,21 @@
 import { useState } from "react";
 
 // style
-import styles from "./AddProject.module.scss";
+import styles from "./UpdateTodo.module.scss";
 
 // component
-import FormProject from "../FormProject";
-
+import FormTodo from "../FormTodo";
 // ant icon
 import { PlusOutlined } from "@ant-design/icons";
 
 // ant component
-import { Drawer } from "antd";
+import { Button, Drawer } from "antd";
 
-function AddProject() {
+function UpdateTodo() {
   // STATE
   const [visible, setVisible] = useState(false);
 
   // METHOD
-
   // open drawer
   const showDrawer = () => {
     setVisible(true);
@@ -30,21 +28,24 @@ function AddProject() {
   };
 
   return (
-    <div className={styles.addProject}>
-      <div className={styles.iconAdd} onClick={showDrawer}>
-        <PlusOutlined style={{ fontSize: "13px" }} />
+    <div className={styles.updateTodo}>
+      <div className={styles.btnUpdate}>
+        <Button type="primary" style={{ width: "99%" }} onClick={showDrawer}>
+          <PlusOutlined />
+          Update Todo
+        </Button>
       </div>
       <Drawer
-        title="Add Project"
+        title="Add Todo"
         placement="left"
         onClose={onClose}
         visible={visible}
         width="300"
       >
-        <FormProject />
+        <FormTodo />
       </Drawer>
     </div>
   );
 }
 
-export default AddProject;
+export default UpdateTodo;

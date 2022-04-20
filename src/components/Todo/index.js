@@ -20,7 +20,7 @@ function Todo() {
     <div className={styles.todo}>
       <Card
         hoverable
-        style={{ width: 240 }}
+        style={{ width: 230 }}
         cover={<img alt="example" src={image} />}
       ></Card>
     </div>

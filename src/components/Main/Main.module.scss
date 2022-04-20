@@ -1,4 +1,10 @@
 .main {
-  margin: 15px;
+  margin: 20px;
   margin-right: 0;
+
+  .pagination {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+  }
 }
