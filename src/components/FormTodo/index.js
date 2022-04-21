@@ -91,13 +91,13 @@ function FormTodo() {
         autoComplete="off"
       >
         {/* name*/}
-        <Form.Item name="name">
+        <Form.Item name="name" className="form-item">
           <Input placeholder="name" />
         </Form.Item>
         {/* name*/}
 
         {/* date*/}
-        <Form.Item name="date">
+        <Form.Item name="date" className="form-item">
           <DatePicker
             format="DD/MM/YYYY"
             onChange={onChangeDate}
@@ -107,13 +107,13 @@ function FormTodo() {
         {/* date*/}
 
         {/* time*/}
-        <Form.Item name="time">
+        <Form.Item name="time" className="form-item">
           <TimePicker onChange={onChangeTime} style={{ width: "100%" }} />
         </Form.Item>
         {/* time*/}
 
         {/* project-name*/}
-        <Form.Item name="projectName">
+        <Form.Item name="projectName" className="form-item">
           <Select
             showSearch
             placeholder="Select a person"
@@ -129,20 +129,23 @@ function FormTodo() {
         {/* project-name*/}
 
         {/* image*/}
-        <Form.Item>
+        <Form.Item className="form-item">
           <Upload
             listType="picture"
             defaultFileList={[...fileList]}
             beforeUpload={onBeforeUpload}
             maxCount={1}
+            className="upload-image"
           >
-            <Button icon={<UploadOutlined />}>Image</Button>
+            <Button className="btn-upload" icon={<UploadOutlined />}>
+              Image
+            </Button>
           </Upload>
         </Form.Item>
         {/* image */}
 
         {/* Button*/}
-        <Form.Item>
+        <Form.Item className="form-item">
           <Button style={{ width: "100%" }} type="primary" htmlType="submit">
             Submit
           </Button>

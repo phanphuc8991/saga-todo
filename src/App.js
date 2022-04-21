@@ -1,20 +1,30 @@
 // router dom
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 // style
 import "./App.css";
 // component
 import Home from "./Pages/Home";
-import Login from "./Pages/Login";
+import Login from "./features/auth/pages/Login";
+// connected-react-router
+import { ConnectedRouter } from "connected-react-router";
+
+// history
+import { history } from "./utils";
+console.log("history", history);
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" to="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
+        </Switch>
+      </ConnectedRouter>
     </div>
   );
 }

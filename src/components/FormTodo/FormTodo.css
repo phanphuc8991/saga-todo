@@ -1,9 +1,11 @@
-.ant-upload.ant-upload-select {
+.form-item > .ant-col-16 {
+  max-width: 100% !important;
+}
+
+.upload-image > .ant-upload.ant-upload-select {
   display: block !important;
 }
-/* .ant-btn-default {
-  width: 100%;
-} */
-.ant-col-16 {
-  max-width: 100% !important;
+
+.btn-upload {
+  width: 100% !important;
 }

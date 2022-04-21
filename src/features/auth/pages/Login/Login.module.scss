@@ -1,0 +1,25 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  background: url("../../../../images/bg-login.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .wrapperLogin {
+    background: white;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 0;
+    width: 310px;
+    border-radius: 5px;
+    .textLogin {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+  }
+}

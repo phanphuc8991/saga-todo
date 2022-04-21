@@ -38,12 +38,12 @@ function FormProject() {
         autoComplete="off"
       >
         {/* name*/}
-        <Form.Item name="name">
+        <Form.Item name="name" className="form-item">
           <Input placeholder="name" />
         </Form.Item>
         {/* name*/}
         {/* Button*/}
-        <Form.Item>
+        <Form.Item className="form-item">
           <Button style={{ width: "100%" }} type="primary" htmlType="submit">
             Submit
           </Button>

@@ -1,25 +1,26 @@
 // react
 import { useState } from "react";
 
+// logo
+import logo from "../../images/logo.jpg";
+
+// style
+import styles from "./Sidebar.module.scss";
+
+// redux
+import { useDispatch } from "react-redux";
+import { logoutStart } from "../../features/auth/authSlice";
+
 // component
 import AddTodo from "../AddTodo";
 import Project from "../Project";
 import AddProject from "../AddProject";
-// style
-import styles from "./Sidebar.module.scss";
-
-// logo
-import logo from "../../images/logo.jpg";
 
 // ant icon
-import {
-  CalendarOutlined,
-  ProjectOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { CalendarOutlined, ProjectOutlined } from "@ant-design/icons";
 
 // ant component
-import { Menu, Avatar, Image, Button } from "antd";
+import { Menu, Avatar } from "antd";
 
 const SubMenu = Menu.SubMenu;
 const rootSubmenuKeys = ["sub1", "sub2"];
@@ -28,15 +29,23 @@ function Sidebar() {
   // STATE
   const [openKeys, setOpenKeys] = useState(["sub1"]);
 
+  // REDUX
+  const dispatch = useDispatch();
+
   // METHOD
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       setOpenKeys(keys);
     } else {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
+  };
+
+  // logout
+  const handleLogOut = () => {
+    console.log("handleLogout");
+    dispatch(logoutStart());
   };
   return (
     <div className={styles.sidebar}>
@@ -44,7 +53,9 @@ function Sidebar() {
         <div className={styles.avatar}>
           <Avatar src={logo} style={{ width: 35 }} />
         </div>
-        <div className={styles.logout}>Log Out</div>
+        <div className={styles.logout} onClick={handleLogOut}>
+          Log Out
+        </div>
       </div>
 
       <AddTodo />
