@@ -5,7 +5,7 @@ import { useState } from "react";
 import styles from "./AddTodo.module.scss";
 
 // component
-import FormTodo from "../FormTodo";
+import FormTodo from "components/FormTodo";
 // ant icon
 import { PlusOutlined } from "@ant-design/icons";
 

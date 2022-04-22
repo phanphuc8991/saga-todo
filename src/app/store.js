@@ -1,14 +1,15 @@
 // import library
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authSlice from "../features/auth/authSlice";
+import projectSlice from "features/project/projectSlice";
 import rootSaga from "../app/rootSaga";
 import createSagaMiddleware from "redux-saga";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { history } from "../utils";
-
 const rootReducer = combineReducers({
   router: connectRouter(history),
-  users: authSlice,
+  auth: authSlice,
+  project: projectSlice,
 });
 const sagaMiddleware = createSagaMiddleware();
 

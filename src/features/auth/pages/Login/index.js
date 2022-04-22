@@ -9,20 +9,20 @@ import { loginStart } from "../../authSlice";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 // ant component
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Spin } from "antd";
 
 function Login() {
   // REDUX
   const dispatch = useDispatch();
-  const currrentUser = useSelector((state) => state.auth);
-  console.log("currrentUser", currrentUser);
+  const isFetching = useSelector((state) => state.auth.isFetching);
+  const error = useSelector((state) => state.auth.error);
+
   // METHOD
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   // login
   const handleLogin = (user) => {
-    console.log("handleLogin");
     dispatch(loginStart(user));
   };
   return (
@@ -40,33 +40,43 @@ function Login() {
         >
           <Form.Item
             name="username"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please input your username!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
           >
             <Input placeholder="username" prefix={<UserOutlined />} />
           </Form.Item>
 
           <Form.Item
             name="password"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please input your password!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
           >
-            <Input.Password placeholder="username" prefix={<LockOutlined />} />
+            <Input.Password placeholder="password" prefix={<LockOutlined />} />
           </Form.Item>
 
           <Form.Item>
-            <Button style={{ width: "100%" }} type="primary" htmlType="submit">
-              Submit
+            <Button
+              loading={isFetching}
+              style={{ width: "100%" }}
+              type="primary"
+              htmlType="submit"
+            >
+              Login
             </Button>
           </Form.Item>
+          {error && (
+            <div className={styles.inCorrectLogin}>
+              The username or password is incorrect{" "}
+            </div>
+          )}
         </Form>
       </div>
     </div>

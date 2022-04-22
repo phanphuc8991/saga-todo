@@ -5,7 +5,7 @@ import { useState } from "react";
 import styles from "./Project.module.scss";
 
 // component
-import FormProject from "../FormProject";
+import FormProject from "components/FormProject";
 
 // ant icon
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";

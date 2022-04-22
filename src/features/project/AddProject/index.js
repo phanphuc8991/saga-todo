@@ -4,8 +4,12 @@ import { useState } from "react";
 // style
 import styles from "./AddProject.module.scss";
 
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { createProjectStart } from "../projectSlice";
+
 // component
-import FormProject from "../FormProject";
+import FormProject from "components/FormProject";
 
 // ant icon
 import { PlusOutlined } from "@ant-design/icons";
@@ -17,6 +21,15 @@ function AddProject() {
   // STATE
   const [visible, setVisible] = useState(false);
 
+  // REDUX
+  const dispatch = useDispatch();
+
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const isFetching = useSelector((state) => state.project.isFetching);
+  const error = useSelector((state) => state.project.error);
+
+  console.log("error", error);
+
   // METHOD
 
   // open drawer
@@ -27,6 +40,15 @@ function AddProject() {
   // close drawer
   const onClose = () => {
     setVisible(false);
+  };
+
+  // create project
+  const createProject = (project) => {
+    const newProject = {
+      userId: currentUser?._id,
+      ...project,
+    };
+    dispatch(createProjectStart(newProject));
   };
 
   return (
@@ -41,7 +63,7 @@ function AddProject() {
         visible={visible}
         width="300"
       >
-        <FormProject />
+        <FormProject onSubmit={createProject} bthLooding={isFetching} />
       </Drawer>
     </div>
   );

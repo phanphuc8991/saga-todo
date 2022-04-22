@@ -2,19 +2,19 @@
 import { useState } from "react";
 
 // logo
-import logo from "../../images/logo.jpg";
+import logo from "images/logo.jpg";
 
 // style
 import styles from "./Sidebar.module.scss";
 
 // redux
-import { useDispatch } from "react-redux";
-import { logoutStart } from "../../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "features/auth/authSlice";
 
 // component
-import AddTodo from "../AddTodo";
-import Project from "../Project";
-import AddProject from "../AddProject";
+import AddTodo from "../components/AddTodo";
+import Project from "../components/Project";
+import AddProject from "features/project/AddProject";
 
 // ant icon
 import { CalendarOutlined, ProjectOutlined } from "@ant-design/icons";
@@ -31,7 +31,7 @@ function Sidebar() {
 
   // REDUX
   const dispatch = useDispatch();
-
+  const currentUser = useSelector((state) => state.auth.currentUser);
   // METHOD
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -44,15 +44,18 @@ function Sidebar() {
 
   // logout
   const handleLogOut = () => {
-    console.log("handleLogout");
-    dispatch(logoutStart());
+    dispatch(logout());
   };
   return (
     <div className={styles.sidebar}>
       <div className={styles.logo}>
         <div className={styles.avatar}>
           <Avatar src={logo} style={{ width: 35 }} />
+          <div className={styles.username} onClick={handleLogOut}>
+            {currentUser?.username}
+          </div>
         </div>
+
         <div className={styles.logout} onClick={handleLogOut}>
           Log Out
         </div>

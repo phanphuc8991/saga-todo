@@ -21,5 +21,12 @@
       font-size: 30px;
       margin-bottom: 10px;
     }
+    .inCorrectLogin {
+      color: red;
+      position: relative;
+      top: -12px;
+      display: flex;
+      justify-content: center;
+    }
   }
 }

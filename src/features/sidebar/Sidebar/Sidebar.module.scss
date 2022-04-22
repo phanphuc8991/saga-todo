@@ -5,7 +5,14 @@
     margin: 5px;
     padding-bottom: 15px;
   }
-
+  .avatar {
+    display: flex;
+    align-items: center;
+    .username {
+      margin-left: 5px;
+      font-weight: bold;
+    }
+  }
   .logout {
     color: #2d80fb;
     cursor: pointer;

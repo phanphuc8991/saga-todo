@@ -1,12 +1,8 @@
 // style
-import styles from "./Main.module.scss";
-
-// react router
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-
+import styles from "./Home.module.scss";
 // component
-import Main from "../../components/Main";
-import Sidebar from "../../components/Sidebar";
+import Main from "components/Main";
+import Sidebar from "features/sidebar/Sidebar";
 
 // ant component
 import { Row, Col } from "antd";

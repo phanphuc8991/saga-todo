@@ -1,16 +1,19 @@
 // router dom
 import { Switch, Route } from "react-router-dom";
+
 // style
 import "./App.css";
+
 // component
-import Home from "./Pages/Home";
-import Login from "./features/auth/pages/Login";
+import Home from "features/home";
+import Login from "features/auth/pages/Login";
+
 // connected-react-router
 import { ConnectedRouter } from "connected-react-router";
 
 // history
-import { history } from "./utils";
-console.log("history", history);
+import { history } from "utils";
+import { PrivateRoute } from "components/common";
 
 function App() {
   return (
@@ -20,9 +23,9 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/home">
+          <PrivateRoute path="/home">
             <Home />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </ConnectedRouter>
     </div>

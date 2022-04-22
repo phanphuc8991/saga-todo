@@ -1,10 +1,6 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
-const currentUser = user && JSON.parse(user).currentUser;
-const TOKEN = currentUser?.accessToken;
-
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
@@ -17,7 +13,7 @@ const userAxiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "content-type": "application/json",
-    token: `Bearer ${TOKEN}`,
+    token: `Bearer ${localStorage.getItem("access_token")}`,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });
