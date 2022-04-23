@@ -10,6 +10,7 @@ import { createProjectStart } from "../projectSlice";
 
 // component
 import FormProject from "components/FormProject";
+import AlertCustom from "components/Alert";
 
 // ant icon
 import { PlusOutlined } from "@ant-design/icons";
@@ -23,13 +24,9 @@ function AddProject() {
 
   // REDUX
   const dispatch = useDispatch();
-
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const isFetching = useSelector((state) => state.project.isFetching);
-  const error = useSelector((state) => state.project.error);
-
-  console.log("error", error);
-
+  const loading = useSelector((state) => state.project.isFetching);
+  console.log("loading", loading);
   // METHOD
 
   // open drawer
@@ -56,6 +53,7 @@ function AddProject() {
       <div className={styles.iconAdd} onClick={showDrawer}>
         <PlusOutlined style={{ fontSize: "13px" }} />
       </div>
+
       <Drawer
         title="Add Project"
         placement="left"
@@ -63,7 +61,10 @@ function AddProject() {
         visible={visible}
         width="300"
       >
-        <FormProject onSubmit={createProject} bthLooding={isFetching} />
+        <div style={{ position: "fixed", top: "15px", left: "50%" }}>
+          <AlertCustom />
+        </div>
+        <FormProject onSubmit={createProject} bthLoading={loading} />
       </Drawer>
     </div>
   );

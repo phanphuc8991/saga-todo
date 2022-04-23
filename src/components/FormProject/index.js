@@ -7,10 +7,10 @@ import { Button, Form, Input } from "antd";
 // default props
 FormProject.defaultProps = {
   onSubmit: () => {},
-  bthLooding: false,
+  bthLoading: false,
 };
 
-function FormProject({ onSubmit, bthLooding }) {
+function FormProject({ onSubmit, bthLoading }) {
   // METHOD
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -53,7 +53,7 @@ function FormProject({ onSubmit, bthLooding }) {
             style={{ width: "100%" }}
             type="primary"
             htmlType="submit"
-            loading={bthLooding}
+            loading={bthLoading}
           >
             Submit
           </Button>

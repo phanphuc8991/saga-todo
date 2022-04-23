@@ -1,24 +1,25 @@
-import { userAxiosClient } from "./axiosClient";
+import axiosClient from "./axiosClient";
+
 const projectApi = {
   getAll: (params) => {
     const url = "/project";
-    return userAxiosClient.get(url, { params });
+    return axiosClient.get(url, { params });
   },
   get: (id) => {
     const url = `/project/${id}`;
-    return userAxiosClient.get(url);
+    return axiosClient.get(url);
   },
   create: (data) => {
     const url = "/project";
-    return userAxiosClient.post(url, data);
+    return axiosClient.post(url, data);
   },
   update: (id, data) => {
     const url = `/project/${id}`;
-    return userAxiosClient.put(url, data);
+    return axiosClient.put(url, data);
   },
   delete: (id) => {
     const url = `/project/${id}`;
-    return userAxiosClient.delete(url);
+    return axiosClient.delete(url);
   },
 };
 

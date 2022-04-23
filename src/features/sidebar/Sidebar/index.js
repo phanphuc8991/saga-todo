@@ -32,6 +32,8 @@ function Sidebar() {
   // REDUX
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
+  const projects = useSelector((state) => state.project.projects);
+  console.log("projects", projects);
   // METHOD
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);

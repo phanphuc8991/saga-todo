@@ -3,7 +3,8 @@ import styles from "./Login.module.scss";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { loginStart } from "../../authSlice";
+//import { loginStart } from "../../authSlice";
+import { login } from "features/auth/authActions";
 
 // ant icon
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
@@ -23,7 +24,7 @@ function Login() {
   };
   // login
   const handleLogin = (user) => {
-    dispatch(loginStart(user));
+    dispatch(login(user));
   };
   return (
     <div className={styles.login}>

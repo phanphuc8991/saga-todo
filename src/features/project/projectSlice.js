@@ -3,8 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   projects: [],
   isFetching: false,
-  error: false,
-  success: false,
 };
 
 const projectSlice = createSlice({
@@ -14,16 +12,25 @@ const projectSlice = createSlice({
     // CREATE
     createProjectStart: (state) => {
       state.isFetching = true;
-      state.error = false;
     },
     createProjectSuccess: (state, action) => {
       state.projects.push(action.payload);
       state.isFetching = false;
-      state.error = false;
     },
-    createProjectFailure: (state) => {
+    createProjectFailure: (state, action) => {
       state.isFetching = false;
-      state.error = true;
+    },
+
+    // GET ALL
+    getProjectStart: (state) => {
+      state.isFetching = true;
+    },
+    getProjectSuccess: (state, action) => {
+      state.projects = action.payload;
+      state.isFetching = false;
+    },
+    getProjectFailure: (state, action) => {
+      state.isFetching = false;
     },
   },
 });
@@ -33,6 +40,9 @@ export const {
   createProjectStart,
   createProjectSuccess,
   createProjectFailure,
+  getProjectStart,
+  getProjectSuccess,
+  getProjectFailure,
 } = actions;
 
 export default reducer;

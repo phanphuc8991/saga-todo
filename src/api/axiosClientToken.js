@@ -1,27 +1,19 @@
 import axios from "axios";
 import queryString from "query-string";
-
-const token = () => localStorage.getItem("access_token");
-const axiosClient = axios.create({
+const token = () => {
+  console.log("run....new new new");
+  return localStorage.getItem("access_token");
+};
+const axiosClientToken = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     "content-type": "application/json",
+    token: `Bearer ${token}`,
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(async (config) => {
-  // if (currentUser) {
-  //   const token = await currentUser.getIdToken();
-  // }
-  if (token()) {
-    config.headers.token = `Bearer ${token()}`;
-  }
-
-  return config;
-});
-
-axiosClient.interceptors.response.use(
+axiosClientToken.interceptors.response.use(
   (response) => {
     if (response && response.data) {
       return response.data;
@@ -35,4 +27,4 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export default axiosClient;
+export default axiosClientToken;
