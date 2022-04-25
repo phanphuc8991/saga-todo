@@ -1,0 +1,11 @@
+.updateTodo .btnUpdate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  padding-bottom: 15px;
+}
+/*# sourceMappingURL=UpdateTodo.module.css.map */

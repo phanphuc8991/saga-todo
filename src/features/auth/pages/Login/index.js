@@ -3,32 +3,53 @@ import styles from "./Login.module.scss";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-//import { loginStart } from "../../authSlice";
-import { login } from "features/auth/authActions";
-
+import { alertShow, alertHidden } from "components/Alert/alertActions";
+import { loginStart } from "features/auth/authActions";
+// components
+import ButtonCustom from "components/Button";
+import AlertCustom from "components/Alert";
 // ant icon
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 // ant component
-import { Form, Input, Button, Spin } from "antd";
+import { Form, Input } from "antd";
 
 function Login() {
   // REDUX
   const dispatch = useDispatch();
-  const isFetching = useSelector((state) => state.auth.isFetching);
-  const error = useSelector((state) => state.auth.error);
+  const loading = useSelector((state) => state.button.loading);
+  const type = useSelector((state) => state.alert.type);
+  const text = useSelector((state) => state.alert.text);
+  const description = useSelector((state) => state.alert.description);
 
   // METHOD
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    const description = errorInfo.errorFields.map((error) => error.errors);
+    dispatch(
+      alertShow({ type: "error", text: "Error Text", description: description })
+    );
   };
   // login
   const handleLogin = (user) => {
-    dispatch(login(user));
+    dispatch(loginStart(user));
   };
+  // closeAlertError
+  const onCloseError = () => {
+    dispatch(alertHidden());
+  };
+
   return (
     <div className={styles.login}>
       <div className={styles.wrapperLogin}>
+        <div className={styles.alert}>
+          <AlertCustom
+            type={type}
+            text={text}
+            description={description}
+            onClose={onCloseError}
+          />
+        </div>
+
         <div className={styles.textLogin}>Login</div>
         <Form
           name="basic"
@@ -64,20 +85,8 @@ function Login() {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              loading={isFetching}
-              style={{ width: "100%" }}
-              type="primary"
-              htmlType="submit"
-            >
-              Login
-            </Button>
+            <ButtonCustom loading={loading} />
           </Form.Item>
-          {error && (
-            <div className={styles.inCorrectLogin}>
-              The username or password is incorrect{" "}
-            </div>
-          )}
         </Form>
       </div>
     </div>

@@ -1,0 +1,10 @@
+.wrapperAlert {
+  position: relative;
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}

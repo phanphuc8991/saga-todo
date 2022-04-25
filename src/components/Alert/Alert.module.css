@@ -1,0 +1,13 @@
+.wrapperAlert {
+  position: relative;
+}
+
+.wrapperAlert .close {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  cursor: pointer;
+}
+/*# sourceMappingURL=Alert.module.css.map */

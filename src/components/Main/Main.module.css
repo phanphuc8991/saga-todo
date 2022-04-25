@@ -1,0 +1,11 @@
+.main {
+  margin: 20px;
+  margin-right: 0;
+}
+
+.main .pagination {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+}
+/*# sourceMappingURL=Main.module.css.map */

@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // logo
 import logo from "images/logo.jpg";
@@ -9,11 +9,12 @@ import styles from "./Sidebar.module.scss";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "features/auth/authSlice";
+import { logout } from "features/auth/authActions";
+import { getProjectsStart } from "features/project/projectActions";
 
 // component
 import AddTodo from "../components/AddTodo";
-import Project from "../components/Project";
+import Project from "features/project/Projects";
 import AddProject from "features/project/AddProject";
 
 // ant icon
@@ -33,7 +34,11 @@ function Sidebar() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const projects = useSelector((state) => state.project.projects);
-  console.log("projects", projects);
+
+  // EFFECT
+  useEffect(() => {
+    dispatch(getProjectsStart());
+  }, []);
   // METHOD
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -105,13 +110,11 @@ function Sidebar() {
             </div>
           }
         >
-          <Menu.Item key="30">
-            <Project />
-          </Menu.Item>
-          <Menu.Item key="40">
-            {" "}
-            <Project />
-          </Menu.Item>
+          {projects.map((project) => (
+            <Menu.Item key={project._id}>
+              <Project project={project} />
+            </Menu.Item>
+          ))}
         </SubMenu>
       </Menu>
     </div>

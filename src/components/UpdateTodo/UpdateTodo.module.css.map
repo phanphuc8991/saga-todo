@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,WADS,CACT,UAAU,CAAC;EACT,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,MAAM;EACvB,KAAK,EAAE,IAAI;EACX,cAAc,EAAE,IAAI;CACrB",
+    "sources": [
+        "UpdateTodo.module.scss"
+    ],
+    "names": [],
+    "file": "UpdateTodo.module.css"
+}

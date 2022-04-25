@@ -4,15 +4,20 @@ const initialState = {
   loading: false,
 };
 
-const authReduer = (state = initialState, action) => {
+const buttonReduer = (state = initialState, action) => {
   switch (action.type) {
-    case types.LOG_IN:
+    case types.LOADING_START:
       return {
         ...state,
-        currentUser: action.payload,
+        loading: true,
+      };
+    case types.LOADING_END:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;
   }
 };
-export default authReduer;
+export default buttonReduer;

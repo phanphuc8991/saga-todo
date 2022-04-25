@@ -1,25 +1,30 @@
 // react
 import { useState } from "react";
 
-// style
-import styles from "./AddProject.module.scss";
-
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { addProjectStart } from "features/project/projectActions";
+import { updateProjectStart } from "features/project/projectActions";
 import { alertHidden, alertShow } from "components/Alert/alertActions";
+
+// style
+import styles from "./Projects.module.scss";
 
 // component
 import FormProject from "components/FormProject";
 import AlertCustom from "components/Alert";
 
 // ant icon
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // ant component
-import { Drawer } from "antd";
+import { Drawer, Popconfirm, message } from "antd";
 
-function AddProject() {
+// default props
+Project.defaultProps = {
+  project: {},
+};
+
+function Project({ project }) {
   // STATE
   const [visible, setVisible] = useState(false);
 
@@ -30,33 +35,42 @@ function AddProject() {
   const type = useSelector((state) => state.alert.type);
   const text = useSelector((state) => state.alert.text);
   const description = useSelector((state) => state.alert.description);
+  // METHOD
 
   // open drawer
   const showDrawer = () => {
     setVisible(true);
   };
-
   // close drawer
   const onClose = () => {
     setVisible(false);
     dispatch(alertHidden());
   };
 
-  // create project
-  const createProject = (project) => {
+  // Popconfirm
+  function confirm(e) {
+    console.log(e);
+    message.success("Click on Yes");
+  }
+
+  function cancel(e) {
+    console.log(e);
+    message.error("Click on No");
+  }
+
+  // update project
+  const updateProject = (projectForm) => {
     const newProject = {
       userId: currentUser?._id,
-      ...project,
+      ...projectForm,
     };
-
-    dispatch(addProjectStart(newProject));
+    dispatch(updateProjectStart({ id: project._id, newProject }));
   };
 
   // closeAlertError
   const onCloseError = () => {
     dispatch(alertHidden());
   };
-
   // onFinishFailed
   const alert = (errorInfo) => {
     const description = errorInfo.errorFields.map((error) => error.errors);
@@ -66,13 +80,29 @@ function AddProject() {
   };
 
   return (
-    <div className={styles.addProject}>
-      <div className={styles.iconAdd} onClick={showDrawer}>
-        <PlusOutlined style={{ fontSize: "13px" }} />
-      </div>
+    <div className={styles.projects}>
+      <div className={styles.projectName}>{project?.name}</div>
+      <div className={styles.btnUpdateDelete}>
+        <div className={styles.btnDelete}>
+          {" "}
+          <Popconfirm
+            title="Are you sure to delete this project?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <DeleteOutlined />
+          </Popconfirm>
+        </div>
 
+        <div className={styles.btnUpdate} onClick={showDrawer}>
+          {" "}
+          <EditOutlined />
+        </div>
+      </div>
       <Drawer
-        title="Add Project"
+        title="Update Project"
         placement="left"
         onClose={onClose}
         visible={visible}
@@ -94,14 +124,14 @@ function AddProject() {
           />
         </div>
         <FormProject
-          onSubmit={createProject}
           loading={loading}
           alert={alert}
-          resetForm={visible}
+          projectUpdate={project}
+          onSubmit={updateProject}
         />
       </Drawer>
     </div>
   );
 }
 
-export default AddProject;
+export default Project;

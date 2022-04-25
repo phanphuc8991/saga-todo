@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,WADS,CACT,QAAQ,CAAC;EACP,YAAY,EAAE,IAAI;EAClB,KAAK,EAAE,IAAI;CACZ",
+    "sources": [
+        "AddProject.module.scss"
+    ],
+    "names": [],
+    "file": "AddProject.module.css"
+}

@@ -3,22 +3,27 @@
 // import authSlice from "../features/auth/authSlice";
 // import projectSlice from "features/project/projectSlice";
 // import alertSlice from "components/Alert/alertSlice";
-import rootSaga from "../app/rootSaga";
+import rootSaga from "./rootSaga";
 import createSagaMiddleware from "redux-saga";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { history } from "../utils";
-import rootReducer from "./rootReducer";
-import { applyMiddle, createStore } from "redux";
+import { applyMiddleware, createStore, combineReducers } from "redux";
+import authReducer from "features/auth/authReducer";
+import buttonReducer from "components/Button/buttonReducer";
+import alertReducer from "components/Alert/alertReducer";
+import projectReducer from "features/project/projectReducer";
+const rootReducer = combineReducers({
+  auth: authReducer,
+  project: projectReducer,
+  button: buttonReducer,
+  alert: alertReducer,
+  router: connectRouter(history),
+});
 
-// const rootReducer = combineReducers({
-//   router: connectRouter(history),
-//   auth: authSlice,
-//   project: projectSlice,
-//   alert: alertSlice,
-// });
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware, routerMiddleware(history)];
-const store = createStore(rootReducer, applyMiddle(...middlewares));
+
+const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 sagaMiddleware.run(rootSaga);
 

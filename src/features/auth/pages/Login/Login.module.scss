@@ -17,6 +17,12 @@
     padding-bottom: 0;
     width: 310px;
     border-radius: 5px;
+    .alert {
+      position: fixed;
+      top: 15px;
+      right: 30px;
+      width: 380px;
+    }
     .textLogin {
       font-size: 30px;
       margin-bottom: 10px;

@@ -1,20 +1,55 @@
-// redux
-import { useSelector } from "react-redux";
+// style
+import styles from "./Alert.module.scss";
 
 // ant component
-import { Alert } from "antd";
+import { Alert, List } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
-function AlertCustom() {
-  const alertName = useSelector((state) => state.alert.alertName);
+// default props
+AlertCustom.defaultProps = {
+  type: "",
+  text: "",
+  description: "",
+  onClose: null,
+};
+
+function AlertCustom({ text, type, onClose, description }) {
+  function getDescription() {
+    return (
+      <ul style={{ listStyle: "none" }}>
+        {typeof description === "string" ? (
+          <li key={description}>{description}</li>
+        ) : (
+          description.map((description) => (
+            <li key={description}>{description}</li>
+          ))
+        )}
+      </ul>
+    );
+  }
 
   return (
-    <div>
-      {alertName === "success" && (
-        <Alert message="success" type="success" showIcon />
-      )}
-
-      {alertName === "error" && <Alert message="Error" type="error" showIcon />}
-    </div>
+    <>
+      {type ? (
+        <div className={styles.wrapperAlert}>
+          <Alert
+            message={text}
+            type={type}
+            description={getDescription()}
+            showIcon
+          />
+          {onClose ? (
+            <div className={styles.close} onClick={onClose}>
+              <CloseOutlined />
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
+      ) : (
+        <></>
+      )}{" "}
+    </>
   );
 }
 export default AlertCustom;
