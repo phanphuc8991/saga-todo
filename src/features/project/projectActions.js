@@ -31,3 +31,11 @@ export const updateProject = (project) => ({
 });
 
 // delete
+export const deleteProjectStart = (project) => ({
+  type: types.DELETE_PROJECT_START,
+  payload: project,
+});
+export const deleteProject = (project) => ({
+  type: types.DELETE_PROJECT,
+  payload: project,
+});

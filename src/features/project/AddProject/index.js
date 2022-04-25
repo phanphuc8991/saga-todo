@@ -48,7 +48,6 @@ function AddProject() {
       userId: currentUser?._id,
       ...project,
     };
-
     dispatch(addProjectStart(newProject));
   };
 

@@ -14,35 +14,23 @@ FormProject.defaultProps = {
   loading: false,
   alert: () => {},
   resetForm: false,
-  projectUpdate: null,
+  project: { name: "" },
   getInitialValueUpdate: () => {},
 };
 
-function FormProject({
-  onSubmit,
-  loading,
-  alert,
-  resetForm,
-  projectUpdate,
-  getInitialValueUpdate,
-}) {
+function FormProject({ onSubmit, loading, alert, resetForm, project }) {
   // REF
   const refForm = useRef();
 
   // EFFECT
   useEffect(() => {
-    if (!projectUpdate) {
+    if (!project) {
       refForm.current.resetFields();
     }
   }, [resetForm]);
-
   useEffect(() => {
-    if (projectUpdate) {
-      refForm.current.setFieldsValue({
-        name: projectUpdate.name,
-      });
-    }
-  }, [projectUpdate]);
+    refForm.current.setFieldsValue(project);
+  }, [resetForm]);
 
   // METHOD
   const onFinishFailed = (errorInfo) => {
@@ -59,9 +47,6 @@ function FormProject({
         }}
         wrapperCol={{
           span: 16,
-        }}
-        initialValues={{
-          name: "",
         }}
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}

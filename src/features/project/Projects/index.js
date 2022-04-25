@@ -3,7 +3,10 @@ import { useState } from "react";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { updateProjectStart } from "features/project/projectActions";
+import {
+  updateProjectStart,
+  deleteProjectStart,
+} from "features/project/projectActions";
 import { alertHidden, alertShow } from "components/Alert/alertActions";
 
 // style
@@ -17,7 +20,7 @@ import AlertCustom from "components/Alert";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // ant component
-import { Drawer, Popconfirm, message } from "antd";
+import { Drawer, Popconfirm, Button } from "antd";
 
 // default props
 Project.defaultProps = {
@@ -26,7 +29,8 @@ Project.defaultProps = {
 
 function Project({ project }) {
   // STATE
-  const [visible, setVisible] = useState(false);
+  const [visibleDrawer, setvisibleDrawer] = useState(false);
+  const [visiblePopconfirm, setVisiblePopconfirm] = useState(false);
 
   // REDUX
   const dispatch = useDispatch();
@@ -39,24 +43,19 @@ function Project({ project }) {
 
   // open drawer
   const showDrawer = () => {
-    setVisible(true);
+    setvisibleDrawer(true);
   };
   // close drawer
   const onClose = () => {
-    setVisible(false);
+    setvisibleDrawer(false);
     dispatch(alertHidden());
   };
 
-  // Popconfirm
-  function confirm(e) {
-    console.log(e);
-    message.success("Click on Yes");
-  }
-
-  function cancel(e) {
-    console.log(e);
-    message.error("Click on No");
-  }
+  // deleteProject
+  const deleteProject = () => {
+    console.log("deleteProjectStart");
+    dispatch(deleteProjectStart({ id: project._id }));
+  };
 
   // update project
   const updateProject = (projectForm) => {
@@ -78,21 +77,45 @@ function Project({ project }) {
       alertShow({ type: "error", text: "Error Text", description: description })
     );
   };
+  // showPopconfirm
+  const showPopconfirm = () => {
+    setVisiblePopconfirm(true);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisiblePopconfirm(false);
+  };
 
   return (
     <div className={styles.projects}>
+      <div
+        style={{
+          position: "fixed",
+          top: "15px",
+          right: "30px",
+          width: "380px",
+        }}
+      >
+        <AlertCustom
+          type={type}
+          text={text}
+          description={description}
+          onClose={onCloseError}
+        />
+      </div>
       <div className={styles.projectName}>{project?.name}</div>
       <div className={styles.btnUpdateDelete}>
         <div className={styles.btnDelete}>
           {" "}
           <Popconfirm
             title="Are you sure to delete this project?"
-            onConfirm={confirm}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
+            onConfirm={deleteProject}
+            visible={visiblePopconfirm}
+            okButtonProps={{ loading: loading }}
+            onCancel={handleCancel}
           >
-            <DeleteOutlined />
+            <DeleteOutlined onClick={showPopconfirm} />
           </Popconfirm>
         </div>
 
@@ -105,7 +128,7 @@ function Project({ project }) {
         title="Update Project"
         placement="left"
         onClose={onClose}
-        visible={visible}
+        visible={visibleDrawer}
         width="300"
       >
         <div
@@ -126,8 +149,9 @@ function Project({ project }) {
         <FormProject
           loading={loading}
           alert={alert}
-          projectUpdate={project}
+          project={project}
           onSubmit={updateProject}
+          resetForm={visibleDrawer}
         />
       </Drawer>
     </div>

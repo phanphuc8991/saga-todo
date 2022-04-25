@@ -11,3 +11,6 @@ export const UPDATE_PROJECT_START = "UPDATE_PROJECT_START";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 
 // delete
+// update
+export const DELETE_PROJECT_START = "DELETE_PROJECT_START";
+export const DELETE_PROJECT = "DELETE_PROJECT";

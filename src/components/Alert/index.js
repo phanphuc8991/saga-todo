@@ -14,6 +14,7 @@ AlertCustom.defaultProps = {
 };
 
 function AlertCustom({ text, type, onClose, description }) {
+  console.log(text, type, onClose, description);
   function getDescription() {
     return (
       <ul style={{ listStyle: "none" }}>

@@ -14,6 +14,7 @@ import { alertShow, alertHidden } from "components/Alert/alertActions";
 import {
   addProject,
   updateProject,
+  deleteProject,
   getProjects,
 } from "features/project/projectActions";
 import * as types from "features/project/projectActionTypes";
@@ -106,12 +107,61 @@ function* onUpdateProjectStart({ payload }) {
   }
 }
 
+function* onDeleteProjectStart({ payload }) {
+  console.log("onDeleteProjectStart");
+  try {
+    console.log("try");
+    yield put(loadingStart());
+
+    const project = yield call(projectApi.delete, payload.id);
+
+    if (project) {
+      yield put(loadingEnd());
+      yield put(deleteProject({ _id: payload.id }));
+      yield put(
+        alertShow({
+          type: "success",
+          text: "Success Text",
+          description: "Delete project successfully",
+        })
+      );
+      yield fork(closeAlert);
+    } else {
+      console.log("try");
+      yield put(loadingEnd());
+      yield put(
+        alertShow({
+          type: "error",
+          text: "Error Text",
+          description: "Delete failure",
+        })
+      );
+      yield fork(closeAlert);
+    }
+  } catch (error) {
+    yield put(loadingEnd());
+    yield put(
+      alertShow({
+        type: "error",
+        text: "Error Text",
+        description: "Delete failure",
+      })
+    );
+    yield fork(closeAlert);
+  }
+}
+
 function* onCreateProject() {
   yield takeLatest(types.ADD_PROJECT_START, onCreateProjectStart);
 }
 
 function* onUpdateproject() {
   yield takeLatest(types.UPDATE_PROJECT_START, onUpdateProjectStart);
+}
+
+function* onDeleteproject() {
+  console.log("onDeleteproject");
+  yield takeLatest(types.DELETE_PROJECT_START, onDeleteProjectStart);
 }
 
 function* getProjectsAsync() {
@@ -145,5 +195,10 @@ function* onGetProjects() {
 }
 
 export default function* projectSaga() {
-  yield all([onCreateProject(), onGetProjects(), onUpdateproject()]);
+  yield all([
+    onCreateProject(),
+    onGetProjects(),
+    onUpdateproject(),
+    onDeleteproject(),
+  ]);
 }

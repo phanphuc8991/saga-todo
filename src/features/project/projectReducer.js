@@ -35,19 +35,34 @@ const projectReduer = (state = initialState, action) => {
 
     case types.UPDATE_PROJECT: {
       const newProjects = [...state.projects];
-      const filterNewProjects = newProjects.map((project) => {
+      const updateProjects = newProjects.map((project) => {
         if (project._id === action.payload._id) {
           return action.payload;
         }
         return project;
       });
+      return {
+        ...state,
+        projects: updateProjects,
+      };
+    }
 
+    // delete
+    case types.DELETE_PROJECT_START:
+      return state;
+
+    case types.DELETE_PROJECT: {
+      console.log("action", action);
+      const newProjects = [...state.projects];
+      const filterNewProjects = newProjects.filter(
+        (project) => project._id !== action.payload._id
+      );
+      console.log("filterNewProjects", filterNewProjects);
       return {
         ...state,
         projects: filterNewProjects,
       };
     }
-
     default:
       return state;
   }
