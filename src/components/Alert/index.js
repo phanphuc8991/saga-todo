@@ -2,7 +2,7 @@
 import styles from "./Alert.module.scss";
 
 // ant component
-import { Alert, List } from "antd";
+import { Alert } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 // default props
@@ -14,8 +14,7 @@ AlertCustom.defaultProps = {
 };
 
 function AlertCustom({ text, type, onClose, description }) {
-  console.log(text, type, onClose, description);
-  function getDescription() {
+  const getDescription = () => {
     return (
       <ul style={{ listStyle: "none" }}>
         {typeof description === "string" ? (
@@ -27,7 +26,7 @@ function AlertCustom({ text, type, onClose, description }) {
         )}
       </ul>
     );
-  }
+  };
 
   return (
     <>

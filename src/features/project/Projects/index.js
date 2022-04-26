@@ -14,13 +14,12 @@ import styles from "./Projects.module.scss";
 
 // component
 import FormProject from "components/FormProject";
-import AlertCustom from "components/Alert";
 
 // ant icon
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // ant component
-import { Drawer, Popconfirm, Button } from "antd";
+import { Drawer, Popconfirm } from "antd";
 
 // default props
 Project.defaultProps = {
@@ -36,9 +35,6 @@ function Project({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const loading = useSelector((state) => state.button.loading);
-  const type = useSelector((state) => state.alert.type);
-  const text = useSelector((state) => state.alert.text);
-  const description = useSelector((state) => state.alert.description);
   // METHOD
 
   // open drawer
@@ -66,10 +62,6 @@ function Project({ project }) {
     dispatch(updateProjectStart({ id: project._id, newProject }));
   };
 
-  // closeAlertError
-  const onCloseError = () => {
-    dispatch(alertHidden());
-  };
   // onFinishFailed
   const alert = (errorInfo) => {
     const description = errorInfo.errorFields.map((error) => error.errors);
@@ -89,21 +81,6 @@ function Project({ project }) {
 
   return (
     <div className={styles.projects}>
-      <div
-        style={{
-          position: "fixed",
-          top: "15px",
-          right: "30px",
-          width: "380px",
-        }}
-      >
-        <AlertCustom
-          type={type}
-          text={text}
-          description={description}
-          onClose={onCloseError}
-        />
-      </div>
       <div className={styles.projectName}>{project?.name}</div>
       <div className={styles.btnUpdateDelete}>
         <div className={styles.btnDelete}>
@@ -114,6 +91,8 @@ function Project({ project }) {
             visible={visiblePopconfirm}
             okButtonProps={{ loading: loading }}
             onCancel={handleCancel}
+            cancelText="Cancel"
+            okText="Yes"
           >
             <DeleteOutlined onClick={showPopconfirm} />
           </Popconfirm>
@@ -131,21 +110,6 @@ function Project({ project }) {
         visible={visibleDrawer}
         width="300"
       >
-        <div
-          style={{
-            position: "fixed",
-            top: "15px",
-            right: "30px",
-            width: "380px",
-          }}
-        >
-          <AlertCustom
-            type={type}
-            text={text}
-            description={description}
-            onClose={onCloseError}
-          />
-        </div>
         <FormProject
           loading={loading}
           alert={alert}

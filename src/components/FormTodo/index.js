@@ -26,7 +26,16 @@ const { Option } = Select;
 // default image
 const fileList = [];
 
-function FormTodo() {
+// default props
+FormTodo.defaultProps = {
+  onSubmit: () => {},
+  loading: false,
+  alert: () => {},
+  resetForm: false,
+  projects: [],
+};
+
+function FormTodo({ onSubmit, loading, alert, resetForm, projects }) {
   // STATE
 
   // METHOD
@@ -48,36 +57,16 @@ function FormTodo() {
     console.log(date, dateString);
   }
 
-  // onChange select
-  function onChangeSelect(value) {
-    console.log(`selected ${value}`);
-  }
-
-  // onSearch select
-  function onSearchSelect(val) {
-    console.log("search:", val);
-  }
   // onBeforeUpload image
   function onBeforeUpload(image) {
     console.log("image:", image);
     return false;
   }
 
-  const formItemLayout = {
-    labelCol: { span: 20 },
-    wrapperCol: { span: 100 },
-  };
   return (
     <div className="form-todo">
       <Form
-        {...formItemLayout}
         name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
         initialValues={{
           name: "",
           projectId: "",
@@ -86,7 +75,7 @@ function FormTodo() {
           day: "",
           finished: false,
         }}
-        onFinish={onFinish}
+        onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
@@ -116,20 +105,20 @@ function FormTodo() {
         <Form.Item name="projectName" className="form-item">
           <Select
             showSearch
-            placeholder="Select a person"
+            placeholder="Select project"
             optionFilterProp="children"
-            onChange={onChangeSelect}
-            onSearch={onSearchSelect}
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            {projects.map((project) => (
+              <Option key={project._id} value={project._id}>
+                {project.name}
+              </Option>
+            ))}
           </Select>
         </Form.Item>
         {/* project-name*/}
 
         {/* image*/}
-        <Form.Item className="form-item">
+        <Form.Item className="form-item" name="image">
           <Upload
             listType="picture"
             defaultFileList={[...fileList]}

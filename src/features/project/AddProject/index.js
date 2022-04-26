@@ -11,7 +11,6 @@ import { alertHidden, alertShow } from "components/Alert/alertActions";
 
 // component
 import FormProject from "components/FormProject";
-import AlertCustom from "components/Alert";
 
 // ant icon
 import { PlusOutlined } from "@ant-design/icons";
@@ -27,9 +26,6 @@ function AddProject() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const loading = useSelector((state) => state.button.loading);
-  const type = useSelector((state) => state.alert.type);
-  const text = useSelector((state) => state.alert.text);
-  const description = useSelector((state) => state.alert.description);
 
   // open drawer
   const showDrawer = () => {
@@ -49,11 +45,6 @@ function AddProject() {
       ...project,
     };
     dispatch(addProjectStart(newProject));
-  };
-
-  // closeAlertError
-  const onCloseError = () => {
-    dispatch(alertHidden());
   };
 
   // onFinishFailed
@@ -77,21 +68,6 @@ function AddProject() {
         visible={visible}
         width="300"
       >
-        <div
-          style={{
-            position: "fixed",
-            top: "15px",
-            right: "30px",
-            width: "380px",
-          }}
-        >
-          <AlertCustom
-            type={type}
-            text={text}
-            description={description}
-            onClose={onCloseError}
-          />
-        </div>
         <FormProject
           onSubmit={createProject}
           loading={loading}

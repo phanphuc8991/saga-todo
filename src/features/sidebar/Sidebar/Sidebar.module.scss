@@ -5,6 +5,12 @@
     margin: 5px;
     padding-bottom: 15px;
   }
+  .alertGlobal {
+    position: fixed;
+    top: 15px;
+    right: 30px;
+    width: 380px;
+  }
   .avatar {
     display: flex;
     align-items: center;

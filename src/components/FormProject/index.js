@@ -15,7 +15,6 @@ FormProject.defaultProps = {
   alert: () => {},
   resetForm: false,
   project: { name: "" },
-  getInitialValueUpdate: () => {},
 };
 
 function FormProject({ onSubmit, loading, alert, resetForm, project }) {

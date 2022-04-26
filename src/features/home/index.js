@@ -11,7 +11,7 @@ function Home() {
   return (
     <div className={styles.home}>
       <Row>
-        <Col span={5}>
+        <Col span={5} style={{ zIndex: "10" }}>
           <Sidebar />
         </Col>
         <Col span={19}>

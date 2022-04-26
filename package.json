@@ -10,6 +10,7 @@
     "antd": "^4.19.5",
     "axios": "^0.26.1",
     "connected-react-router": "^6.9.2",
+    "firebase": "^9.6.11",
     "history": "^4.10.1",
     "moment": "^2.29.3",
     "query-string": "^7.1.1",

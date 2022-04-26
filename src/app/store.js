@@ -12,10 +12,12 @@ import authReducer from "features/auth/authReducer";
 import buttonReducer from "components/Button/buttonReducer";
 import alertReducer from "components/Alert/alertReducer";
 import projectReducer from "features/project/projectReducer";
+import todoReducer from "features/todo/todoReducer";
 const rootReducer = combineReducers({
   auth: authReducer,
   project: projectReducer,
   button: buttonReducer,
+  todo: todoReducer,
   alert: alertReducer,
   router: connectRouter(history),
 });

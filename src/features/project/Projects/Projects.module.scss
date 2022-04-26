@@ -1,9 +1,12 @@
 .projects {
   display: flex;
   justify-content: space-between;
-  .projectName {
+  .alertGlobal {
+    position: fixed;
+    top: 15px;
+    right: 30px;
+    width: 380px;
   }
-
   .btnUpdateDelete {
     display: flex;
     justify-content: space-between;
