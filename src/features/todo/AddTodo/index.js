@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // style
 import styles from "./AddTodo.module.scss";
@@ -31,8 +31,16 @@ function AddTodo({ projects }) {
 
   // REDUX
   const dispatch = useDispatch();
-
+  const loading = useSelector((state) => state.button.loading);
+  const type = useSelector((state) => state.alert.type);
+  // EFFECT
+  useEffect(() => {
+    if (type === "success") {
+      setVisible(false);
+    }
+  });
   // METHOD
+
   // open drawer
   const showDrawer = () => {
     setVisible(true);
@@ -40,11 +48,15 @@ function AddTodo({ projects }) {
 
   // close drawer
   const onClose = () => {
-    setVisible(false);
+    if (!loading) {
+      setVisible(false);
+    }
   };
 
   // create project
   const createTodo = (todo) => {
+    if (todo.image.fileList.length === 0) {
+    }
     const newTodo = {
       ...todo,
       date: moment(todo.date).format("DD/MM/YYYY"),
@@ -53,6 +65,14 @@ function AddTodo({ projects }) {
       finished: false,
     };
     dispatch(addTodoStart(newTodo));
+  };
+
+  // onFinishFailed
+  const alert = (errorInfo) => {
+    const description = errorInfo.errorFields.map((error) => error.errors);
+    dispatch(
+      alertShow({ type: "error", text: "Error Text", description: description })
+    );
   };
 
   return (
@@ -70,7 +90,14 @@ function AddTodo({ projects }) {
         visible={visible}
         width="300"
       >
-        <FormTodo onSubmit={createTodo} projects={projects} />
+        <FormTodo
+          alert={alert}
+          loading={loading}
+          onSubmit={createTodo}
+          projects={projects}
+          resetForm={visible}
+          type="Create"
+        />
       </Drawer>
     </div>
   );

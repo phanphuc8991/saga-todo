@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -35,6 +35,14 @@ function Project({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const loading = useSelector((state) => state.button.loading);
+  const type = useSelector((state) => state.alert.type);
+
+  // EFFECT
+  useEffect(() => {
+    if (type === "success") {
+      setvisibleDrawer(false);
+    }
+  });
   // METHOD
 
   // open drawer
@@ -43,8 +51,9 @@ function Project({ project }) {
   };
   // close drawer
   const onClose = () => {
-    setvisibleDrawer(false);
-    dispatch(alertHidden());
+    if (!loading) {
+      setvisibleDrawer(false);
+    }
   };
 
   // deleteProject

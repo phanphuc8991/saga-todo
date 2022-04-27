@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // moment
 import moment from "moment";
@@ -11,6 +11,10 @@ import "./FormTodo.css";
 import { UploadOutlined } from "@ant-design/icons";
 
 // ant component
+
+// component
+import ButtonCustom from "components/Button";
+
 import {
   Button,
   Form,
@@ -24,7 +28,6 @@ import {
 const { Option } = Select;
 
 // default image
-const fileList = [];
 
 // default props
 FormTodo.defaultProps = {
@@ -33,18 +36,52 @@ FormTodo.defaultProps = {
   alert: () => {},
   resetForm: false,
   projects: [],
+  type: "",
+  initialValues: {
+    name: undefined,
+    projectId: undefined,
+    date: undefined,
+    time: undefined,
+    day: undefined,
+    finished: false,
+    image: undefined,
+  },
 };
 
-function FormTodo({ onSubmit, loading, alert, resetForm, projects }) {
+function FormTodo({
+  onSubmit,
+  loading,
+  alert,
+  resetForm,
+  projects,
+  type,
+  initialValues,
+}) {
+  // REF
+  const refForm = useRef();
+
   // STATE
 
+  const [fileListImage, setFileListImage] = useState([]);
+
+  useEffect(() => {
+    if (type !== "Update") {
+      refForm.current.resetFields();
+    }
+  }, [resetForm]);
+  // EFFECT
+  useEffect(() => {
+    if (type === "Update") {
+      refForm.current.setFieldsValue(initialValues);
+    }
+    if (initialValues?.image) {
+      setFileListImage([initialValues.image]);
+    }
+  }, [initialValues]);
   // METHOD
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    alert(errorInfo);
   };
 
   // onChange datepicker
@@ -66,27 +103,38 @@ function FormTodo({ onSubmit, loading, alert, resetForm, projects }) {
   return (
     <div className="form-todo">
       <Form
+        ref={refForm}
         name="basic"
-        initialValues={{
-          name: "",
-          projectId: "",
-          date: "",
-          time: "",
-          day: "",
-          finished: false,
-        }}
         onFinish={onSubmit}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         {/* name*/}
-        <Form.Item name="name" className="form-item">
+        <Form.Item
+          name="name"
+          className="form-item"
+          rules={[
+            {
+              required: true,
+              message: "Please input project name!",
+            },
+          ]}
+        >
           <Input placeholder="name" />
         </Form.Item>
         {/* name*/}
 
         {/* date*/}
-        <Form.Item name="date" className="form-item">
+        <Form.Item
+          name="date"
+          className="form-item"
+          rules={[
+            {
+              required: true,
+              message: "Please choose date!",
+            },
+          ]}
+        >
           <DatePicker
             format="DD/MM/YYYY"
             onChange={onChangeDate}
@@ -96,13 +144,31 @@ function FormTodo({ onSubmit, loading, alert, resetForm, projects }) {
         {/* date*/}
 
         {/* time*/}
-        <Form.Item name="time" className="form-item">
+        <Form.Item
+          name="time"
+          className="form-item"
+          rules={[
+            {
+              required: true,
+              message: "Please choose time!",
+            },
+          ]}
+        >
           <TimePicker onChange={onChangeTime} style={{ width: "100%" }} />
         </Form.Item>
         {/* time*/}
 
         {/* project-name*/}
-        <Form.Item name="projectName" className="form-item">
+        <Form.Item
+          name="projectId"
+          className="form-item"
+          rules={[
+            {
+              required: true,
+              message: "Please choose project!",
+            },
+          ]}
+        >
           <Select
             showSearch
             placeholder="Select project"
@@ -118,13 +184,35 @@ function FormTodo({ onSubmit, loading, alert, resetForm, projects }) {
         {/* project-name*/}
 
         {/* image*/}
-        <Form.Item className="form-item" name="image">
+        <Form.Item
+          className="form-item"
+          name="image"
+          rules={[
+            {
+              validator: (_, value) => {
+                console.log(value);
+                if ((value && value.fileList?.length > 0) || value.thumbUrl) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("Please choose image"));
+              },
+            },
+          ]}
+        >
           <Upload
             listType="picture"
-            defaultFileList={[...fileList]}
+            fileList={fileListImage}
             beforeUpload={onBeforeUpload}
             maxCount={1}
             className="upload-image"
+            accept=".png,.jpg,.jpeg"
+            onChange={(file) => {
+              if (file.fileList.length === 0) {
+                setFileListImage([]);
+              } else {
+                setFileListImage(file.fileList);
+              }
+            }}
           >
             <Button className="btn-upload" icon={<UploadOutlined />}>
               Image
@@ -135,9 +223,7 @@ function FormTodo({ onSubmit, loading, alert, resetForm, projects }) {
 
         {/* Button*/}
         <Form.Item className="form-item">
-          <Button style={{ width: "100%" }} type="primary" htmlType="submit">
-            Submit
-          </Button>
+          <ButtonCustom loading={loading} text={type} />
         </Form.Item>
         {/* Button*/}
       </Form>

@@ -27,6 +27,7 @@ function FormProject({ onSubmit, loading, alert, resetForm, project }) {
       refForm.current.resetFields();
     }
   }, [resetForm]);
+
   useEffect(() => {
     refForm.current.setFieldsValue(project);
   }, [resetForm]);
@@ -37,7 +38,7 @@ function FormProject({ onSubmit, loading, alert, resetForm, project }) {
   };
 
   return (
-    <div className="form-todo">
+    <div className="form-project">
       <Form
         ref={refForm}
         name="basic"

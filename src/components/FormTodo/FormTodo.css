@@ -9,3 +9,11 @@
 .btn-upload {
   width: 100% !important;
 }
+.form-todo
+  > .ant-form.ant-form-horizontal
+  > .ant-form-item-has-error
+  > .ant-form-item-control
+  > .ant-form-item-explain-connected
+  > .ant-form-item-explain-error {
+  display: none;
+}

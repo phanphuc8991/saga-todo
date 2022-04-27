@@ -1,2 +1,9 @@
 .home {
+  .alertGlobal {
+    position: fixed;
+    top: 15px;
+    right: 30px;
+    width: 380px;
+    z-index: 2000;
+  }
 }

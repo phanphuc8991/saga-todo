@@ -7,9 +7,10 @@ import { Button } from "antd";
 // default props
 ButtonCustom.defaultProps = {
   loading: false,
+  text: "submit",
 };
 
-function ButtonCustom({ loading }) {
+function ButtonCustom({ loading, text }) {
   return (
     <div>
       <Button
@@ -18,7 +19,7 @@ function ButtonCustom({ loading }) {
         htmlType="submit"
         loading={loading}
       >
-        Submit
+        {text}
       </Button>
     </div>
   );

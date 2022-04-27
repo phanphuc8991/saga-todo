@@ -28,9 +28,9 @@ function* closeAlert() {
 
 function* getProjectsAsync() {
   try {
-    const user = yield call(projectApi.getAll);
-    if (user) {
-      yield put(getProjects(user));
+    const projects = yield call(projectApi.getAll);
+    if (projects) {
+      yield put(getProjects(projects));
     } else {
       yield put(
         alertShow({
@@ -191,6 +191,7 @@ function* onUpdateproject() {
 function* onDeleteproject() {
   yield takeLatest(types.DELETE_PROJECT_START, onDeleteProjectStart);
 }
+
 function* onGetProjects() {
   yield takeEvery(types.GET_PROJECTS_START, getProjectsAsync);
 }

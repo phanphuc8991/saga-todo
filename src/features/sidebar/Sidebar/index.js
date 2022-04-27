@@ -1,5 +1,5 @@
 // react
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 // logo
 import logo from "images/logo.jpg";
@@ -11,12 +11,11 @@ import styles from "./Sidebar.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "features/auth/authActions";
 import { getProjectsStart } from "features/project/projectActions";
-import { alertHidden } from "components/Alert/alertActions";
+
 // component
 import AddTodo from "features/todo/AddTodo";
 import Project from "features/project/Projects";
 import AddProject from "features/project/AddProject";
-import AlertCustom from "components/Alert";
 
 // ant icon
 import { CalendarOutlined, ProjectOutlined } from "@ant-design/icons";
@@ -35,15 +34,15 @@ function Sidebar() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const projects = useSelector((state) => state.project.projects);
-  const type = useSelector((state) => state.alert.type);
-  const text = useSelector((state) => state.alert.text);
-  const description = useSelector((state) => state.alert.description);
 
   // EFFECT
   useEffect(() => {
     dispatch(getProjectsStart());
   }, []);
+
   // METHOD
+
+  // menu
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -52,24 +51,13 @@ function Sidebar() {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
-  // closeAlertError
-  const onCloseError = () => {
-    dispatch(alertHidden());
-  };
+
   // logout
   const handleLogOut = () => {
     dispatch(logout());
   };
   return (
     <div className={styles.sidebar}>
-      <div className={styles.alertGlobal}>
-        <AlertCustom
-          type={type}
-          text={text}
-          description={description}
-          onClose={onCloseError}
-        />
-      </div>
       <div className={styles.logo}>
         <div className={styles.avatar}>
           <Avatar src={logo} style={{ width: 35 }} />
@@ -136,4 +124,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default memo(Sidebar);

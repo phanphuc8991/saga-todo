@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // style
 import styles from "./AddProject.module.scss";
@@ -26,7 +26,13 @@ function AddProject() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.currentUser);
   const loading = useSelector((state) => state.button.loading);
-
+  const type = useSelector((state) => state.alert.type);
+  // EFFECT
+  useEffect(() => {
+    if (type === "success") {
+      setVisible(false);
+    }
+  });
   // open drawer
   const showDrawer = () => {
     setVisible(true);
@@ -34,8 +40,9 @@ function AddProject() {
 
   // close drawer
   const onClose = () => {
-    setVisible(false);
-    dispatch(alertHidden());
+    if (!loading) {
+      setVisible(false);
+    }
   };
 
   // create project
